@@ -7,22 +7,19 @@ class Player(User):
         # reservaciones = {date : [court, start_time, end_time]}
         self.reservations = {}
     
-    def make_reservation(self, system, schedule, player, court):
+    def make_reservation(self, system, date, schedule, player, court):
         #reservation = {id : [self.schedule.date, self.schedule.start_time, self.schedule.end_time, self.user.name, self.court.id, self.status]
         # se obtiene una rsv
-        reservation = system.autorize_rsv(schedule, player, court)
+        reservation = system.autorize_rsv(date, schedule, player, court)
 
         if isinstance(reservation, Reservation):
-            if len(self.reservations) == 0:
-                self.reservations[reservation.schedule.date] = []
-                self.reservations[reservation.schedule.date].append([reservation.court.id, reservation.schedule.start_time, reservation.schedule.end_time])
+            if len(self.reservations) == 0 or reservation.date not in self.reservations.keys():
+                self.reservations[reservation.date] = []
+                self.reservations[reservation.date].append([reservation.court.id, reservation.schedule.start_time, reservation.schedule.end_time])
             else:
-                if reservation.schedule.date in self.reservations.keys():
-                    self.reservations[reservation.schedule.date].append([reservation.court.id, reservation.schedule.start_time, reservation.schedule.end_time])
-                else:
-                    self.reservations[reservation.schedule.date] = []
-                    self.reservations[reservation.schedule.date].append([reservation.court.id, reservation.schedule.start_time, reservation.schedule.end_time])
-
+                if reservation.date in self.reservations.keys():
+                    self.reservations[reservation.date].append([reservation.court.id, reservation.schedule.start_time, reservation.schedule.end_time])
+        
         else:
             print("Error en la reserva:", reservation)
     

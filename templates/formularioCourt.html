@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>¡Bienvenido!</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <a href="http://127.0.0.1:5000/">
+            <button id="regresar-b">Regresar</button>
+        </a>
+        <h1 id="bienvenido">Create court</h1>
+        <form action="/courts" method="POST">
+            <div class="info">
+            </div>
+            <label for="price">Price:</label>
+            <input type="text" name="price" required><br><br>
+    
+            <label for="status">Status:</label>
+            <input type="text" name="status" required><br><br>
+    
+            <button id="agendar" type="submit">Add court</button>
+        </form>
+    </body>
+</html>
